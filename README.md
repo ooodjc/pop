@@ -2,6 +2,7 @@
 ### 货架商品活动提示排版工具
 输出结果为横版A4图片，一张图片有4格内容。
 
+[在线页面](https://ooodjc.github.io/pop/)
 # 一、安装
 ``` 
 npm install
