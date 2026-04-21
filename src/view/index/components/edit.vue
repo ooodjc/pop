@@ -13,7 +13,7 @@
             <el-icon :size="25" @click="RowMinus(renderData[page].rows)"><Minus /></el-icon>
             <el-icon :size="25" @click="RowAdd(renderData[page].rows)"><Plus /></el-icon>
         </div>
-        <div class="p-5 mt-5 flex items-center flex-wrap row" v-for="row in renderData[page].rows" :index="row.id">
+        <div class="p-5 mt-5 flex items-center flex-wrap row" v-for="(row, index) in renderData[page].rows" :index="row.id || index">
             <div class="column mr-5" v-for="column in row.columns" :index="column.id">
                 <el-input v-model="column.content" placeholder="请输入文字" />
                 <!-- element-plus 下拉选择文字大小，选项：大，中，小 -->
@@ -34,8 +34,10 @@
                <div class="flex justify-center items-center">末尾靠右</div>
                <el-switch class="ml-2" v-model="row.endRight" />
             </div>
-            <!-- <el-switch v-model="row.center" active-text="居中" inactive-text="不居中" /> -->
-            <!-- <el-switch v-model="row.endRight" active-text="末尾靠右" inactive-text="末尾不靠右" /> -->
+            <!-- 按钮“插入一行” -->
+            <el-button type="primary" @click="InsertRowBefore(renderData[page].rows, index)" class="ml-5">插入行</el-button>
+            <!-- 删除当前行 -->
+            <el-button type="danger" @click="DeleteRow(renderData[page].rows, index)" class="ml-5">删除行</el-button>
         </div>
     </div>
 </template>
@@ -94,6 +96,26 @@ const ColumnAdd = (columns) => {
 //Column去除最后一个
 const ColumnMinus = (columns) => {
     columns.pop();
+}
+
+//在指定位置插入一行
+const InsertRowBefore = (rows, index) => {
+    rows.splice(index, 0, {
+        id: rows.length + 1,
+        columns: [
+            {
+                id: 1,
+                content: '',
+                size: 'medium',
+            },
+        ],
+        center: false,
+    })
+}
+
+//删除指定行
+const DeleteRow = (rows, index) => {
+    rows.splice(index, 1);
 }
 </script>
 
